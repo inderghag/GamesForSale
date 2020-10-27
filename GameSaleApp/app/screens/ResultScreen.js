@@ -5,6 +5,8 @@ export default function ResultScreen({navigation}) {
     let searchUrl = 'https://www.cheapshark.com/api/1.0/games?title=' + navigation.getParam('name');
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    let validResults = [];
+
     useEffect(() => {
         fetch(searchUrl)
         .then(response => response.json())
@@ -12,12 +14,24 @@ export default function ResultScreen({navigation}) {
         .catch(error => console.error(error))
         .finally(() => setLoading(false));
     }, []);
+
+    function fillValidResults() {
+        let searchStr = navigation.getParam('name').toLowerCase();
+        let len = searchStr.length;
+        for(let i = 0; i < data.length; i++){
+            if(data[i].external.length > len && data[i].external.substring(0,len).toLowerCase() == searchStr){
+                validResults.push(data[i]);
+            }
+        }
+    }
     
     return (
         <View style={styles.container}>
             {isLoading ? <ActivityIndicator/> : (
+                fillValidResults(),
+
                 <FlatList
-                    data={data}
+                    data={validResults}
                     keyExtractor={({ gameID }, index) => gameID}
                     renderItem={({  item }) =>(
 
