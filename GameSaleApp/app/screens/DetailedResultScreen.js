@@ -57,8 +57,8 @@ export default function DetailedResultScreen({navigation}) {
                                             Linking.openURL(item.dealID);
                                         }}>
 
-                                        <Text style={{textAlign: "center"}}>Sale Price: ${item.price}</Text>
-                                        <Text style={{textAlign: "center"}}>Saving: ${item.savings}</Text>
+                                        <Text style={[styles.fontStyle, {color: 'red'} ]}>Sale Price: ${item.price}</Text>
+                                        <Text style={styles.fontStyle}>Saving: ${item.savings}</Text>
 
                                     </TouchableOpacity>
                                 </View>
@@ -87,6 +87,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#c6c6ec",
         borderWidth: 1,
         borderColor: "grey"
+    },
+    fontStyle: {
+        textAlign:"center",
+        fontWeight:"bold",
+        fontSize: 15,
     },
     titleContainer: {
         flex: 1,

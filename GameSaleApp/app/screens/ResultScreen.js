@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, StyleSheet, Text, View, Image } from 'react-native'
+import { ActivityIndicator, FlatList, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 
 export default function ResultScreen({navigation}) {
     let searchUrl = 'https://www.cheapshark.com/api/1.0/games?title=' + navigation.getParam('name');
@@ -35,19 +35,21 @@ export default function ResultScreen({navigation}) {
                     keyExtractor={({ gameID }, index) => gameID}
                     renderItem={({  item }) =>(
 
-                        <View style={{paddingBottom: 5}}>
-                            <View
-                             style={styles.listCard}
-                             onTouchEnd={() => navigation.navigate('Details', {
-                                data: item.gameID,
-                             })}
+                        <View style={{paddingBottom: 10}}>
+                                
+                            <TouchableOpacity onPress={() => navigation.navigate('Details', {
+                                    data: item.gameID,
+                                })}
                             >
-                                <Image 
-                                style={{ height:50, width:165,}}
-                                source={{ uri: item.thumb }}
-                                />
-                                <Text style={styles.fontStyle}>{item.external}</Text>
-                            </View>
+                                <View style={styles.listCard}>
+                                    <Image 
+                                    style={{ height:50, width:165, alignSelf: "center"}}
+                                    source={{ uri: item.thumb }}
+                                    />
+                                    <Text style={styles.fontStyle}>{item.external}</Text>
+                                </View>
+                            </TouchableOpacity>
+
                         </View>
 
                     )}
@@ -59,19 +61,19 @@ export default function ResultScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: "#8c8cd9",
-        alignItems: "center"
     },
     listCard: {
         backgroundColor: "#5353c6",
         borderColor: 'grey',
         borderWidth: 1,
-        flex: 6,
-        width: 200,
-        padding: 15,
+        alignItems:"stretch",
+        padding: 10,
     },
     fontStyle: {
         textAlign: "center",
-        fontSize: 15,
+        fontWeight:"bold",
+        fontSize: 25,
     }
 });
